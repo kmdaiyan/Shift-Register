@@ -1,0 +1,98 @@
+module reg_fsm(clk,w,z,reset); 
+  
+  input clk,reset,w;
+  output reg [2:0]z;	
+		parameter S0=  3'd0; 
+		parameter S1=  3'd1;
+		parameter S2=  3'd2;
+        parameter S3=  3'd3;
+        parameter S4=  3'd4;
+        parameter S5=  3'd5;
+        parameter S6=  3'd6;
+        parameter S7=  3'd7;		
+        	  
+  reg [2:0]current_state;
+  reg [2:0]next_state;	
+  
+  always@(negedge reset or posedge clk) // reset
+      
+            if(reset==0)
+              current_state<=S0;
+              else
+                current_state<=next_state;
+          
+		
+  always@(w or current_state)  //state change
+		
+              case(current_state)
+           
+                  S0: if(w==0)
+                      begin
+                        next_state<=S0;
+                      end
+                      else
+                        begin
+                          next_state<=S4;
+                        end
+                  S1: if(w==0)
+                      begin
+                        next_state<=S0;
+                      end
+                      else
+                        begin
+                          next_state<=S4;
+                        end
+                  S2:if(w==0)
+                      begin
+                        next_state<=S1;
+                      end
+                      else
+                        begin
+                          next_state<=S5;
+                        end
+                
+                 S3:if(w==0)
+                      begin
+                        next_state<=S1;
+                      end
+                      else
+                        begin
+                          next_state<=S5;
+                        end
+                S4:if(w==0)
+                      begin
+                        next_state<=S2;
+                      end
+                      else
+                        begin
+                          next_state<=S6;
+                        end
+                S5:if(w==0)
+                      begin
+                        next_state<=S2;
+                      end
+                      else
+                        begin
+                          next_state<=S6;
+                        end
+                S6:if(w==0)
+                      begin
+                        next_state<=S3;
+                      end
+                      else
+                        begin
+                          next_state<=S7;
+                        end
+                S7:if(w==0)
+                      begin
+                        next_state<=S3;
+                      end
+                      else
+                        begin
+                          next_state<=S7;
+                        end
+                  endcase
+      
+   assign z=current_state;
+         endmodule
+                 

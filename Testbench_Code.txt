@@ -1,0 +1,45 @@
+// Code your testbench here
+// or browse Examples
+module reg_fsm_tb;
+  reg clk,reset,w;
+  wire [2:0]z;
+  
+ //clock generation
+  initial
+   forever #5 clk=~clk;
+  
+ reg_fsm uut (.clk(clk),
+            .reset(reset),
+            .w(w),
+            .z(z)
+          );
+  
+  initial begin
+    clk=0;
+    reset=0;
+    w=0;
+    
+    #6 reset=1;
+    #10 w=1;
+    #10 w=1;
+    #10 w=1;
+    #20 w=0;
+    #10 w=1;
+    #30 w=0;
+    #10 w=1;
+    #10 w=1;
+    #10 w=1;
+    #10 w=0;
+    #20;
+   
+    $finish;
+  end
+  
+  initial begin
+ // Dump waves
+    $dumpfile("dump.vcd");
+    $dumpvars(1);
+  end
+endmodule
+    
+    
